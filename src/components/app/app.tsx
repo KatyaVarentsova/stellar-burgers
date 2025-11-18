@@ -14,10 +14,19 @@ import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { ProtectedRoute } from '../protected-route';
+import { useAppDispatch } from '../../services/store';
+import { fetchAutoUser, fetchIngredients } from '@slices';
 
 const App: FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAutoUser());
+    dispatch(fetchIngredients());
+  }, []);
+
   const navigate = useNavigate();
   const handleModalClose = () => {
     navigate(-1);
@@ -65,11 +74,10 @@ const App: FC = () => {
             </ProtectedRoute>
           }
         />
-
         <Route
           path='/profile'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyAuth>
               <Profile />
             </ProtectedRoute>
           }
@@ -77,7 +85,7 @@ const App: FC = () => {
         <Route
           path='/profile/orders'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyAuth>
               <ProfileOrders />
             </ProtectedRoute>
           }
@@ -107,7 +115,7 @@ const App: FC = () => {
         <Route
           path='/profile/orders/:number'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyAuth>
               <Modal title='Информация о заказе' onClose={handleModalClose}>
                 <OrderInfo />
               </Modal>
