@@ -8,14 +8,13 @@ export const ProtectedRoute: FC<IProtectedRouteProps> = ({
   children
 }) => {
   const isAuth = Boolean(getCookie('accessToken'));
-  const location = useLocation();
 
   if (onlyAuth && !isAuth) {
-    return <Navigate to='/login' replace state={{ from: location.pathname }} />;
+    return <Navigate to='/login' />;
   }
 
   if (!onlyAuth && isAuth) {
-    return <Navigate to='/profile' replace />;
+    return <Navigate to='/profile' />;
   }
   return children;
 };
