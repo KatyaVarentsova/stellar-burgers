@@ -44,7 +44,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
               ingredient={item}
               index={index}
               totalItems={constructorItems.ingredients.length}
-              key={item.id}
+              key={item._id + index}
             />
           )
         )
@@ -88,7 +88,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
     </div>
 
     {orderRequest && (
-      <Modal onClose={closeOrderModal} title={'Оформляем заказ...'}>
+      <Modal onClose={closeOrderModal} title={'Оформляем заказ...'} hideClose>
         <Preloader />
       </Modal>
     )}
