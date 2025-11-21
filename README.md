@@ -1,5 +1,4 @@
 # Проектная работа 11-го спринта
-[Демо-видео](<https://drive.google.com/file/d/1gXuffaNczNkCp19tOdJeH_76kSgwSJHq/view?usp=sharing>)
 
 [Макет](<https://www.figma.com/file/vIywAvqfkOIRWGOkfOnReY/React-Fullstack_-Проектные-задачи-(3-месяца)_external_link?type=design&node-id=0-1&mode=design>)
 
