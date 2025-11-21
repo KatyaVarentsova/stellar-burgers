@@ -66,6 +66,9 @@ const ordersSlice = createSlice({
     },
     saveOrderDetails: (state, action: PayloadAction<TOrder>) => {
       state.orderDetails = action.payload;
+    },
+    clearOrderDetails: (state) => {
+      state.orderDetails = null;
     }
   },
   selectors: {
@@ -85,8 +88,13 @@ const ordersSlice = createSlice({
 });
 
 export default ordersSlice.reducer;
-export const { saveOrders, saveModalData, clearModalData, saveOrderDetails } =
-  ordersSlice.actions;
+export const {
+  saveOrders,
+  saveModalData,
+  clearModalData,
+  saveOrderDetails,
+  clearOrderDetails
+} = ordersSlice.actions;
 export const {
   orderdsListSelector,
   orderModalDataSelector,
