@@ -17,7 +17,12 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { FC, useEffect } from 'react';
 import { ProtectedRoute } from '../protected-route';
 import { useAppDispatch } from '../../services/store';
-import { fetchAutoUser, fetchIngredients } from '@slices';
+import {
+  clearIngredientDetails,
+  clearOrderDetails,
+  fetchAutoUser,
+  fetchIngredients
+} from '@slices';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +35,8 @@ const App: FC = () => {
   const navigate = useNavigate();
   const handleModalClose = () => {
     navigate(-1);
+    dispatch(clearIngredientDetails());
+    dispatch(clearOrderDetails());
   };
   const location = useLocation();
   const backgroundLocation = location.state?.background;
@@ -39,7 +46,10 @@ const App: FC = () => {
       <AppHeader />
       <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+
         <Route path='/feed' element={<Feed />} />
+        <Route path='/feed/:number' element={<OrderInfo />} />
 
         <Route
           path='/login'
@@ -86,6 +96,15 @@ const App: FC = () => {
           element={
             <ProtectedRoute onlyAuth>
               <ProfileOrders />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute onlyAuth>
+              <OrderInfo />
             </ProtectedRoute>
           }
         />

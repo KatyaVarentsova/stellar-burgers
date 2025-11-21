@@ -13,12 +13,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 
-interface IUserState {
-  // isAuth: boolean;
+interface IUserState extends TUser {
+  userRequest: boolean;
 }
 
-const userState: TUser = {
-  // isAuth: false
+const userState: IUserState = {
+  userRequest: false,
   name: '',
   email: ''
 };
@@ -94,10 +94,41 @@ const userSlice = createSlice({
   },
   selectors: {
     nameSelector: (state) => state.name,
-    emailSelector: (state) => state.email
+    emailSelector: (state) => state.email,
+    userRequestSelector: (state) => state.userRequest
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAutoUser.pending, (state) => {
+      state.userRequest = true;
+    });
+    builder.addCase(fetchAutoUser.fulfilled, (state) => {
+      state.userRequest = false;
+    });
+    builder.addCase(fetchAutoUser.rejected, (state) => {
+      state.userRequest = false;
+    });
+    builder.addCase(fetchLoginUser.pending, (state) => {
+      state.userRequest = true;
+    });
+    builder.addCase(fetchLoginUser.fulfilled, (state) => {
+      state.userRequest = false;
+    });
+    builder.addCase(fetchLoginUser.rejected, (state) => {
+      state.userRequest = false;
+    });
+    builder.addCase(fetchRegistrationUser.pending, (state) => {
+      state.userRequest = true;
+    });
+    builder.addCase(fetchRegistrationUser.fulfilled, (state) => {
+      state.userRequest = false;
+    });
+    builder.addCase(fetchRegistrationUser.rejected, (state) => {
+      state.userRequest = false;
+    });
   }
 });
 
 export default userSlice.reducer;
 export const { saveUser, clearUser } = userSlice.actions;
-export const { nameSelector, emailSelector } = userSlice.selectors;
+export const { nameSelector, emailSelector, userRequestSelector } =
+  userSlice.selectors;

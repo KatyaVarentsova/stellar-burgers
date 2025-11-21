@@ -7,14 +7,15 @@ interface IIngredientsState {
   buns: TIngredient[];
   mains: TIngredient[];
   sauces: TIngredient[];
-  ingredientDetails?: TIngredient;
+  ingredientDetails: TIngredient | undefined;
 }
 
 const ingredientsState: IIngredientsState = {
   ingredients: [],
   buns: [],
   mains: [],
-  sauces: []
+  sauces: [],
+  ingredientDetails: undefined
 };
 
 export const fetchIngredients = createAsyncThunk<TIngredient[], void>(
@@ -46,6 +47,9 @@ const burgerIngredientsSlice = createSlice({
           (item) => item._id === action.payload
         );
       }
+    },
+    clearIngredientDetails: (state) => {
+      state.ingredientDetails = undefined;
     }
   },
   selectors: {
@@ -58,8 +62,11 @@ const burgerIngredientsSlice = createSlice({
 });
 
 export default burgerIngredientsSlice.reducer;
-export const { saveIngredients, searchIngredientDetails } =
-  burgerIngredientsSlice.actions;
+export const {
+  saveIngredients,
+  searchIngredientDetails,
+  clearIngredientDetails
+} = burgerIngredientsSlice.actions;
 export const {
   ingredientsSelector,
   bunsSelector,

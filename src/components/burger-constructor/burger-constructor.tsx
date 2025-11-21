@@ -29,7 +29,7 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!getCookie('accessToken')) {
-      navigate('/login');
+      return navigate('/login');
     }
     if (!constructorItems.bun || orderRequest) return;
 
